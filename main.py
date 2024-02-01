@@ -1,6 +1,7 @@
 import sys
 import pygame
 from setings import Settings
+from ship import Ship
 
 class Game():
     def __init__(self):
@@ -8,6 +9,7 @@ class Game():
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Атака пришельцев")
+        self.ship = Ship(self.screen)
         #self.bg_color = (41, 179, 217)
         
     def run_game(self):
@@ -18,6 +20,7 @@ class Game():
                     sys.exit()
         
             self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
         
             pygame.display.flip()
         
