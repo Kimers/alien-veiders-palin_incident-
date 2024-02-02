@@ -8,7 +8,8 @@ class Settings():
         #Скорость персонажа#
         self.ship_speed = 1.25
         #Пуля#
-        self.bullet_speed = 1
+        self.bullet_allow = 5
+        self.bullet_speed = 2
         self.bullet_width= 15
         self.bullet_height = 2
         self.bullet_color = (255, 255, 0)
