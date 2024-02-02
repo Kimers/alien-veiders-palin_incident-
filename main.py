@@ -23,12 +23,7 @@ class Game():
         while True:
             self._check_event()
             self.ship.update()
-            self.bullet.update()
-            
-            for bullet in self.bullet.copy():
-                if bullet.rect.right>=self.settings.screen_width:
-                    self.bullet.remove(bullet)
-            print(len(self.bullet))
+            self._update_bullet()
             
             self._update_screen()
 
@@ -81,6 +76,13 @@ class Game():
         if len(self.bullet) <= self.settings.bullet_allow:
             new_bullet = Bullet(self)
             self.bullet.add(new_bullet)
+            
+    def _update_bullet(self):
+        self.bullet.update()
+        for bullet in self.bullet.copy():
+            if bullet.rect.right>=self.settings.screen_width:
+                self.bullet.remove(bullet)
+        print(len(self.bullet))        
      
                     
 
