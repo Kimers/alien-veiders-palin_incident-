@@ -2,6 +2,7 @@ import sys
 import pygame
 from setings import Settings
 from ship import Ship
+from enemy import Enemy
 from bullet import Bullet
 
 class Game():
@@ -11,8 +12,10 @@ class Game():
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Атака пришельцев")
         self.ship = Ship(self)
+        self.enemy = pygame.sprite.Group()
         self.bullet = pygame.sprite.Group()
         
+        self._create_enemy()
         #self.bg_color = (41, 179, 217)
         #Полный экран#
         #self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -71,6 +74,11 @@ class Game():
             self.settings.ship_speed -=0.5     
             
             
+    def _create_enemy(self):
+        enemy = Enemy(self)
+        self.enemy.add(enemy)
+    
+    
             
     def _fire(self):
         if len(self.bullet) <= self.settings.bullet_allow:
@@ -84,6 +92,9 @@ class Game():
                 self.bullet.remove(bullet)
         print(len(self.bullet))        
      
+        
+        
+        
                     
 
     def _update_screen(self):
@@ -91,6 +102,7 @@ class Game():
         self.ship.blitme()
         for bullet in self.bullet.sprites():
             bullet.draft_bullet()
+        self.enemy.draw(self.screen)
         pygame.display.flip()        
         
 
