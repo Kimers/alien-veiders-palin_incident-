@@ -76,9 +76,22 @@ class Game():
             
     def _create_enemy(self):
         enemy = Enemy(self)
+        enemy_height = enemy.rect.height
+        avalible_space_y = self.settings.screen_height - (2*enemy_height)
+        avalible_enemy_y = avalible_space_y // (2*enemy_height)
+        #self.enemy.add(enemy)
+        
+        for enemy_number in range(avalible_enemy_y):
+            self._create_enemys(enemy_number)
+        print(len(self.enemy))
+            
+    
+    def _create_enemys(self,enemy_number):
+        enemy = Enemy(self)
+        enemy_height = enemy.rect.height
+        enemy.y = enemy_height + 2 * enemy_height * enemy_number
+        enemy.rect.y = enemy.y
         self.enemy.add(enemy)
-    
-    
             
     def _fire(self):
         if len(self.bullet) <= self.settings.bullet_allow:
@@ -90,7 +103,7 @@ class Game():
         for bullet in self.bullet.copy():
             if bullet.rect.right>=self.settings.screen_width:
                 self.bullet.remove(bullet)
-        print(len(self.bullet))        
+        #print(len(self.bullet))        
      
         
         
