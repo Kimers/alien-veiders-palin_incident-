@@ -9,11 +9,12 @@ class Game():
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Атака пришельцев")
-        self.ship = Ship(self.screen)
+        self.ship = Ship(self)
         #self.bg_color = (41, 179, 217)
         
     def run_game(self):
         while True:
+            self.ship.update()
             self._check_event()
             self._update_screen()
 
@@ -21,7 +22,21 @@ class Game():
     def _check_event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()        
+                sys.exit()
+                
+                
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    #self.ship.rect.y -= 1
+                    self.ship.moving_up = True
+                elif event.key == pygame.K_DOWN:
+                    self.ship.moving_down = True                    
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP:
+                    self.ship.moving_up = False
+                elif event.key == pygame.K_DOWN:
+                    self.ship.moving_down = False                
+                    
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
