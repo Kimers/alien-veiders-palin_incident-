@@ -2,6 +2,7 @@ import sys
 import pygame
 from setings import Settings
 from ship import Ship
+from bullet import Bullet
 
 class Game():
     def __init__(self):
@@ -10,6 +11,8 @@ class Game():
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Атака пришельцев")
         self.ship = Ship(self)
+        self.bullet = pygame.sprite.Group()
+        
         #self.bg_color = (41, 179, 217)
         #Полный экран#
         #self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -20,6 +23,7 @@ class Game():
         while True:
             self._check_event()
             self.ship.update()
+            self.bullet.update()
             self._update_screen()
 
         
@@ -47,6 +51,8 @@ class Game():
             self.ship.moving_right = True                
         elif event.key == pygame.K_LSHIFT:
             self.settings.ship_speed +=0.5
+        elif event.key == pygame.K_SPACE:
+            self._fire()
         elif event.key == pygame.K_q:
             sys.exit()
      
@@ -61,13 +67,21 @@ class Game():
         elif event.key == pygame.K_RIGHT:
             self.ship.moving_right = False                 
         elif event.key == pygame.K_LSHIFT:
-            self.settings.ship_speed -=0.5             
+            self.settings.ship_speed -=0.5     
+            
+            
+            
+    def _fire(self):
+        new_bullet = Bullet(self)
+        self.bullet.add(new_bullet)
      
                     
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
+        for bullet in self.bullet.sprites():
+            bullet.draft_bullet()
         pygame.display.flip()        
         
 
