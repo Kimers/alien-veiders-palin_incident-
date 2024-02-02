@@ -30,12 +30,17 @@ class Game():
                     #self.ship.rect.y -= 1
                     self.ship.moving_up = True
                 elif event.key == pygame.K_DOWN:
-                    self.ship.moving_down = True                    
+                    self.ship.moving_down = True
+                elif event.key == pygame.K_LSHIFT:
+                    self.settings.ship_speed +=0.5                
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
                     self.ship.moving_up = False
                 elif event.key == pygame.K_DOWN:
-                    self.ship.moving_down = False                
+                    self.ship.moving_down = False
+                elif event.key == pygame.K_LSHIFT:
+                    self.settings.ship_speed -=0.5                
+                
                     
 
     def _update_screen(self):
