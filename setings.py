@@ -13,3 +13,7 @@ class Settings():
         self.bullet_width= 15
         self.bullet_height = 2
         self.bullet_color = (255, 255, 0)
+        #Враги
+        self.enemy_speed = 0.30
+        self.enemy_closespeed = 10
+        self.flee_direction = 1

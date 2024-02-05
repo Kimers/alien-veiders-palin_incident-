@@ -27,7 +27,7 @@ class Game():
             self._check_event()
             self.ship.update()
             self._update_bullet()
-            
+            self._update_enemy()
             self._update_screen()
 
         
@@ -79,7 +79,7 @@ class Game():
         enemy_width , enemy_height = enemy.rect.size
         
         ship_width = self.ship.rect.width
-        avalible_space_x = ((self.settings.screen_width) - (3*enemy_width) - ship_width)        
+        avalible_space_x = ((self.settings.screen_width) - (2*enemy_width) - ship_width)        
         
         avalible_space_y = self.settings.screen_height - (2*enemy_height)
         avalible_enemy_y = avalible_space_y // (2*enemy_height)
@@ -103,10 +103,32 @@ class Game():
         enemy.y = enemy_height + 2 * enemy_height * enemy_number
         enemy.rect.y = enemy.y
         enemy.rect.x = self.settings.screen_width - (enemy.rect.width + 2 * enemy.rect.width * ruw_number)
-        print(enemy.rect.x)
-        print(enemy.rect.y)
+        #print(enemy.rect.x)
+        #print(enemy.rect.y)
 
         self.enemy.add(enemy)
+        
+        
+    def _check_flee_edge(self):
+        for enemy in self.enemy.sprites():
+            if enemy.check_gran():
+                self.change_direct()
+                break
+            
+    def change_direct(self):
+        for enemy in self.enemy.sprites():
+            enemy.rect.x -= self.settings.enemy_closespeed
+        self.settings.flee_direction *= -1
+        
+        
+        
+    def _update_enemy(self):
+        self._check_flee_edge()
+        self.enemy.update()
+        
+        
+        
+        
             
     def _fire(self):
         if len(self.bullet) <= self.settings.bullet_allow:
