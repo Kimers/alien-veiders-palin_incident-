@@ -76,21 +76,36 @@ class Game():
             
     def _create_enemy(self):
         enemy = Enemy(self)
-        enemy_height = enemy.rect.height
+        enemy_width , enemy_height = enemy.rect.size
+        
+        ship_width = self.ship.rect.width
+        avalible_space_x = ((self.settings.screen_width) - (3*enemy_width) - ship_width)        
+        
         avalible_space_y = self.settings.screen_height - (2*enemy_height)
         avalible_enemy_y = avalible_space_y // (2*enemy_height)
         #self.enemy.add(enemy)
         
-        for enemy_number in range(avalible_enemy_y):
-            self._create_enemys(enemy_number)
-        print(len(self.enemy))
+        print(avalible_space_x)
+        print(avalible_space_y)
+        
+        number_ruw = avalible_space_x // (2*enemy_width)
+        
+        
+        for ruw_number in range(number_ruw):
+            for enemy_number in range(avalible_enemy_y):
+                self._create_enemys(enemy_number,ruw_number)
+            #print(len(self.enemy))
             
     
-    def _create_enemys(self,enemy_number):
+    def _create_enemys(self,enemy_number,ruw_number):
         enemy = Enemy(self)
-        enemy_height = enemy.rect.height
+        enemy_width , enemy_height = enemy.rect.size
         enemy.y = enemy_height + 2 * enemy_height * enemy_number
         enemy.rect.y = enemy.y
+        enemy.rect.x = self.settings.screen_width - (enemy.rect.width + 2 * enemy.rect.width * ruw_number)
+        print(enemy.rect.x)
+        print(enemy.rect.y)
+
         self.enemy.add(enemy)
             
     def _fire(self):
