@@ -126,6 +126,9 @@ class Game():
         self._check_flee_edge()
         self.enemy.update()
         
+        if pygame.sprite.spritecollideany(self.ship , self.enemy):
+            print ("Попали")
+        
         
         
         
@@ -140,8 +143,16 @@ class Game():
         for bullet in self.bullet.copy():
             if bullet.rect.right>=self.settings.screen_width:
                 self.bullet.remove(bullet)
-        #print(len(self.bullet))        
+        #print(len(self.bullet))
+        
+        self._chek_col()
+
      
+    def _chek_col(self):
+        collision = pygame.sprite.groupcollide(self.bullet , self.enemy , True , True)
+        if not self.enemy:
+            self.bullet.empty()
+            self._create_enemy()        
         
         
         
