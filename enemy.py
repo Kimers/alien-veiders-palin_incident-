@@ -19,7 +19,7 @@ class Enemy(Sprite):
     def check_gran(self):
         screen_rect = self.screen.get_rect()
         if self.rect.bottom >= screen_rect.bottom or screen_rect.top>self.rect.top:
-            print("True")
+            #print("True")
             return True
         else:
             return False

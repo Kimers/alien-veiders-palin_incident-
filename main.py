@@ -28,9 +28,12 @@ class Game():
     def run_game(self):
         while True:
             self._check_event()
-            self.ship.update()
-            self._update_bullet()
-            self._update_enemy()
+            
+            if self.stats.game_activ:
+            
+                self.ship.update()
+                self._update_bullet()
+                self._update_enemy()
             self._update_screen()
 
         
@@ -164,14 +167,20 @@ class Game():
             
             
     def _ship_hit(self):
-        self.stats.ship_left -= 1
+        if self.stats.ship_left>0:
+            self.stats.ship_left -= 1
         
-        self.enemy.empty()
-        self.bullet.empty()
-        self._create_enemy()
-        self.ship.center_ship()
+            self.enemy.empty()
+            self.bullet.empty()
+            self._create_enemy()
+            self.ship.center_ship()
         
-        sleep(0.5)
+            sleep(0.5)
+            print(self.stats.game_activ)
+            
+        else:
+            self.stats.game_activ = False
+            print(self.stats.game_activ)
         
         
         
