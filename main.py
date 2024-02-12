@@ -6,6 +6,7 @@ from ship import Ship
 from enemy import Enemy
 from bullet import Bullet
 from statistic import Game_stats
+from button import Button
 
 class Game():
     def __init__(self):
@@ -19,11 +20,15 @@ class Game():
         self.bullet = pygame.sprite.Group()
         
         self._create_enemy()
+        
+        
         #self.bg_color = (41, 179, 217)
         #Полный экран#
         #self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         #self.settings.screen_width = self.screen.get_rect().width
-        #self.settings.screen_height = self.screen.get_rect().height        
+        #self.settings.screen_height = self.screen.get_rect().height    
+        
+        self.play_button = Button(self,"Play")
         
     def run_game(self):
         while True:
@@ -42,11 +47,23 @@ class Game():
             if event.type == pygame.QUIT:
                 sys.exit()
                 
+                
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
+                
+                
+                
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown(event)
                                 
             elif event.type == pygame.KEYUP:
                 self._check_keyup(event)
+                
+                
+    def _check_play_button(self,mouse_pos):
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.stats.game_activ = True
                 
      
     def _check_keydown(self,event):
@@ -192,6 +209,10 @@ class Game():
         for bullet in self.bullet.sprites():
             bullet.draft_bullet()
         self.enemy.draw(self.screen)
+        
+        if not self.stats.game_activ:
+            self.play_button.draw_button()
+        
         pygame.display.flip()        
         
 
