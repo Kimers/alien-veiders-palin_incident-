@@ -5,8 +5,9 @@ class Settings():
         self.screen_height = 900
         #Цвет фона#
         self.bg_color = (128, 130, 152)
-        #Скорость персонажа#
+        #Персонаж#
         self.ship_speed = 1.25
+        self.ship_limit = 3
         #Пуля#
         self.bullet_allow = 5
         self.bullet_speed = 2

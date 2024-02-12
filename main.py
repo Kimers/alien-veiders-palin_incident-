@@ -1,9 +1,11 @@
 import sys
 import pygame
+from time import sleep
 from setings import Settings
 from ship import Ship
 from enemy import Enemy
 from bullet import Bullet
+from statistic import Game_stats
 
 class Game():
     def __init__(self):
@@ -11,6 +13,7 @@ class Game():
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         pygame.display.set_caption("Атака пришельцев")
+        self.stats = Game_stats(self)
         self.ship = Ship(self)
         self.enemy = pygame.sprite.Group()
         self.bullet = pygame.sprite.Group()
@@ -127,8 +130,10 @@ class Game():
         self.enemy.update()
         
         if pygame.sprite.spritecollideany(self.ship , self.enemy):
-            print ("Попали")
-        
+            #print ("Попали")
+            self._ship_hit()
+    
+
         
         
         
@@ -146,13 +151,27 @@ class Game():
         #print(len(self.bullet))
         
         self._chek_col()
+        
+        
+    
 
      
     def _chek_col(self):
         collision = pygame.sprite.groupcollide(self.bullet , self.enemy , True , True)
         if not self.enemy:
             self.bullet.empty()
-            self._create_enemy()        
+            self._create_enemy()
+            
+            
+    def _ship_hit(self):
+        self.stats.ship_left -= 1
+        
+        self.enemy.empty()
+        self.bullet.empty()
+        self._create_enemy()
+        self.ship.center_ship()
+        
+        sleep(0.5)
         
         
         
